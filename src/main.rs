@@ -1,6 +1,5 @@
 use std::env;
 
 fn main() {
-    println!("Операционная система: {}", env::consts::OS);
-    println!("Центральный процессор архитектура: {}", env::consts::ARCH);
+    println!("Операционная система: {} {}", env::consts::OS, env::consts::ARCH);
 }
