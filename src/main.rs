@@ -1,3 +1,5 @@
+use std::env;
+
 fn main() {
-    println!("Hello, world!");
+    println!("Операционная система: {}", env::consts::OS);
 }
