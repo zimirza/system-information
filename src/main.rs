@@ -80,9 +80,9 @@ async fn main() -> Result<(), anyhow::Error> {
             in("rdi") &utsname as *const _,
         );
     }
-    let system_information = Uname::from(utsname);
+    let uname = Uname::from(utsname);
 
-    println!("\t\t\t{}", system_information.nodename);
+    println!("\t\t\t{}", uname.nodename);
     println!(
         "Операционная система:\t{} {}",
         operating_system.expect("неизвестно операционная система"),
