@@ -88,6 +88,7 @@ async fn main() -> Result<(), anyhow::Error> {
         operating_system.expect("неизвестно операционная система"),
         env::consts::ARCH
     );
+    println!("Ядро:\t\t\t{}", uname.release);
 
     Ok(())
 }
