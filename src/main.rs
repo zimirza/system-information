@@ -68,6 +68,8 @@ impl From<Utsname> for Uname {
 async fn main() -> Result<(), anyhow::Error> {
     let mut os = HashMap::new();
     os.insert("linux", "Линукс");
+    os.insert("solaris", "солярис");
+    os.insert("android", "андроид");
 
     let operating_system = os.get(env::consts::OS);
 
