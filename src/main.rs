@@ -82,7 +82,11 @@ async fn main() -> Result<(), anyhow::Error> {
     }
     let uname = Uname::from(utsname);
 
-    println!("\t\t\t{}", uname.nodename);
+    println!(
+        "\t\t\t{}@{}",
+        env::home_dir().unwrap().to_string_lossy().to_string(),
+        uname.nodename
+    );
     println!(
         "Операционная система:\t{} {}",
         operating_system.expect("неизвестно операционная система"),
