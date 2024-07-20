@@ -79,7 +79,7 @@ async fn main() -> Result<(), anyhow::Error> {
         asm!(
             "mov rax, 63",
             "syscall",
-            in("rdi") &utsname as *const _,
+            in("rdi") &utsname as *const Utsname,
         );
     }
     let uname = Uname::from(utsname);
