@@ -11,7 +11,7 @@ char* get_kernel() {
         return "(no kernel)";
     }
 
-    snprintf(kernel, sizeof(kernel) * 4, "%s %s\n", buffer.sysname, buffer.release);
+    snprintf(kernel, sizeof(kernel) * 4, "%s %s", buffer.sysname, buffer.release);
 
     return kernel;
 }
