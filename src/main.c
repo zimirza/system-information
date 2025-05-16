@@ -1,38 +1,53 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/utsname.h>
 #include <unistd.h>
 
+#include "main.h"
+
 char* get_kernel() {
-    char* kernel = malloc(sizeof(char));
-    struct utsname buffer;
-
-    if (uname(&buffer) != 0) {
-        return "(no kernel)";
-    }
-
-    snprintf(kernel, sizeof(kernel) * 4, "%s %s", buffer.sysname, buffer.release);
-
-    return kernel;
+    return NULL;
 }
 
 char* get_hostname() {
-    static char hostname[128];
-    if (gethostname(hostname, 128) == 0) {
-        hostname[128 - 1] = '\0';
-        return hostname;
-    }
-    return "(no hostname)";
+    return NULL;
 }
 
-int main(void) {
-    char* hostname = get_hostname();
-    char* kernel = get_kernel();
+void print(char* text) {
+    long text_len = 0;
 
-    printf("%s@%s\n", getenv("USER"), hostname);
-    printf("%s\n", kernel);
+    char *p = text;
 
-    free(kernel);
+    while (*p != '\0') {
+        text_len++;
+        p++;
+    }
 
-    return 0;
+    text_len--;
+
+    __asm__ volatile (
+        "mov $1, %%rax\n\t"
+        "mov $1, %%rdi\n\t"
+        "mov %[ptr], %%rsi\n\t"
+        "mov %[len], %%rdx\n\t"
+        "syscall\n\t"
+        :
+        : [ptr] "r" (text),
+          [len] "r" (text_len)
+        : "rax", "rdi", "rsi", "rdx"
+    );
+}
+
+void end() {
+    __asm__ volatile (
+        "mov $60, %%rax\n\t"
+        "mov $0, %%rdi\n\t"
+        "syscall\n\t"
+        :
+        :
+        : "rax", "rdi"
+    );
+}
+
+void main(void) {
+    char msg[] = "System Information\n";
+    print(msg);
+    end();
 }
